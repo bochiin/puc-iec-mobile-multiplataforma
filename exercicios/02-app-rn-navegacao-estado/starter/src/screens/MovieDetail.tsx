@@ -18,8 +18,6 @@ import { posterUrl } from '@/utils/poster-url';
 import { isTokenError } from '@/services/api';
 import TokenMissingScreen from '@/components/TokenMissingScreen';
 import type { RootStackParamList } from '@/routes/RootStack';
-import HeartButton from '@/components/HeartButton';
-import { useFavoritesStore } from '@/store/favoritesStore';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
@@ -33,9 +31,6 @@ export default function MovieDetail({ route, navigation }: Props) {
 
   const poster = posterUrl(data.poster_path, 'w500');
 
-  const isFav = useFavoritesStore((s) => s.isFavorite(id));
-  const toggle = useFavoritesStore((s) => s.toggle);
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Botão voltar custom (fallback caso header não esteja visível) */}
@@ -45,9 +40,10 @@ export default function MovieDetail({ route, navigation }: Props) {
 
       {poster && <Image source={{ uri: poster }} style={styles.poster} />}
 
+      {/* Linha com título + slot pro HeartButton (TASK 8) */}
       <View style={styles.headerRow}>
         <Text style={styles.title}>{data.title}</Text>
-        <HeartButton active={isFav} onPress={() => toggle(id)} />
+        {/* TODO [TASK 8]: <HeartButton active={isFav} onPress={() => toggle(id)} /> */}
       </View>
 
       <Text style={styles.meta}>
